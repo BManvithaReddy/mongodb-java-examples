@@ -27,7 +27,15 @@ sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' +
 }
 }
 }
-
+stage("SonarQube Quality Gate") { 
+        timeout(time: 1, unit: 'HOURS') { 
+           def qg = waitForQualityGate() 
+           if (qg.status != 'OK') {
+           dir(project_path)
+             error "Pipeline aborted due to quality gate failure: ${qg.status}"
+           }
+        }
+    }
 stage('archival') {
 steps {
 dir(project_path) {
