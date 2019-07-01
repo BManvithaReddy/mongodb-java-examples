@@ -32,14 +32,16 @@ steps {
 dir(project_path) {
         sleep 20
         timeout(time: 1, unit: 'HOURS') { 
+         steps {
            def qg = waitForQualityGate() 
-           steps {
+           
            if (qg.status != 'OK') {
              error "Pipeline aborted due to quality gate failure: ${qg.status}"
              }
              }
              }
              }
+             
              }
              }
 stage('archival') {
