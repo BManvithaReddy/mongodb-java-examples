@@ -7,7 +7,7 @@ stages {
 stage('compile,test and package') {
 steps {
 dir(project_path) {
-bat 'mvn clean package'
+sh 'mvn clean package'
 }
 }
 }
@@ -15,7 +15,7 @@ stage('SonarQube analysis') {
 steps {
 withSonarQubeEnv('sonar') { 
 dir(project_path) {
-bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
+sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
 '-f pom.xml ' +
 '-Dsonar.projectKey=com.huettermann:all:master ' + 
 '-Dsonar.language=java ' +
